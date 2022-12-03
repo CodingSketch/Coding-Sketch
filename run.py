@@ -26,14 +26,14 @@ def change_para(cell_value):
 if args.back:
 	filename = ["caida","campus"]
 	filename += ["zipf"+"{:.1f}".format(i/10) for i in range(0,10+1)]
-	dataset = ["/share/CAIDA_2018/00.dat", "/share/datasets/campus/campus.dat"]
+	dataset = ["/share/CAIDA_2018/00.dat", "/share/datasets/campus/campus.dat"] #you can use different caida dataset, 00 is just a example
 	dataset += ["/share/zipf_2022/zipf_{:.1f}.dat".format(i/10) for i in range(0,10+1)]
 
 	cnt = 0
 	for name,d_set in zip(filename, dataset):#change dataset	
-		if name not in ['caida','campus','zipf0.3','zipf0.8']: continue
+		#if name not in ['caida','campus','zipf0.3','zipf0.8']: continue
 
-		path = "/root/bit_experi/{0}_flow_result_32.xlsx".format(name)
+		path = "/root/bit_experi/{0}_result.xlsx".format(name)
 		print("target file: ", path)
 		#path = "/root/bit_experi/{0}_cm_ver0_changebit_result.xlsx".format(name)
 		workbook = openpyxl.load_workbook(path)
@@ -46,12 +46,15 @@ if args.back:
 		for struct_type in range(1,8+1):#change data structure
 			print()
 
-			#change ara.h
+			#change para.h
+			#sometimes the number of counters of each layers for coding sketch and flag version is different, change that before running
+			'''
 			if struct_type in range(1,3+1):
 				mem_allocate = sheet_AAE['B' + str(struct_type+1)].value
 				print(mem_allocate)
 				change_para(mem_allocate)
-			
+			'''
+
 			#delete outdated file
 			command = "rm sketch{}.csv".format(struct_type)
 			print(command)
